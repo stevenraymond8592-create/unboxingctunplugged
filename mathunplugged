@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Unplugged: Thinking Outside the Box</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- html2canvas Library - Required for jsPDF's html() method -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <!-- jsPDF Library for PDF Generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .page {
+            display: none;
+        }
+        .page.active {
+            display: block;
+        }
+        /* Simple transition for modal */
+        .modal {
+            transition: opacity 0.3s ease;
+        }
+        /* Styles for printing */
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-800 text-gray-200">
+
+    <!-- Main Container -->
+    <div id="app-container" class="container mx-auto p-4 md:p-8 max-w-5xl">
+
+        <!-- Home Page -->
+        <div id="home-page" class="page active">
+            <header class="text-center mb-10">
+                <h1 class="text-4xl md:text-5xl font-extrabold mb-3">
+                    <span class="bg-gradient-to-r from-teal-400 to-blue-500 text-transparent bg-clip-text">Math Unplugged</span>
+                </h1>
+                <p class="text-lg text-gray-400">Integrating Computational Thinking into K-5 Math</p>
+ <p class="text-lg text-gray-400">Unboxing CT Project</p>
+            </header>
+            
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-6">
+                <!-- Grade Level Cards -->
+                <div onclick="showPage('kindergarten-page')" class="grade-card bg-gray-700 rounded-lg p-6 shadow-lg hover:shadow-cyan-500/50 hover:scale-105 transition-transform duration-300 cursor-pointer text-center">
+                    <h2 class="text-3xl font-bold mb-2">K</h2>
+                    <p class="font-semibold text-teal-400">Kindergarten</p>
+                </div>
+                <div onclick="showPage('first-grade-page')" class="grade-card bg-gray-700 rounded-lg p-6 shadow-lg hover:shadow-cyan-500/50 hover:scale-105 transition-transform duration-300 cursor-pointer text-center">
+                    <h2 class="text-3xl font-bold mb-2">1</h2>
+                    <p class="font-semibold text-teal-400">1st Grade</p>
+                </div>
+                <div class="grade-card bg-gray-700 rounded-lg p-6 shadow-lg hover:shadow-cyan-500/50 hover:scale-105 transition-transform duration-300 cursor-not-allowed opacity-50 text-center">
+                    <h2 class="text-3xl font-bold mb-2">2</h2>
+                    <p class="font-semibold text-teal-400">2nd Grade</p>
+                </div>
+                <div class="grade-card bg-gray-700 rounded-lg p-6 shadow-lg hover:shadow-cyan-500/50 hover:scale-105 transition-transform duration-300 cursor-not-allowed opacity-50 text-center">
+                    <h2 class="text-3xl font-bold mb-2">3</h2>
+                    <p class="font-semibold text-teal-400">3rd Grade</p>
+                </div>
+                <div class="grade-card bg-gray-700 rounded-lg p-6 shadow-lg hover:shadow-cyan-500/50 hover:scale-105 transition-transform duration-300 cursor-not-allowed opacity-50 text-center">
+                    <h2 class="text-3xl font-bold mb-2">4</h2>
+                    <p class="font-semibold text-teal-400">4th Grade</p>
+                </div>
+                <div class="grade-card bg-gray-700 rounded-lg p-6 shadow-lg hover:shadow-cyan-500/50 hover:scale-105 transition-transform duration-300 cursor-not-allowed opacity-50 text-center">
+                    <h2 class="text-3xl font-bold mb-2">5</h2>
+                    <p class="font-semibold text-teal-400">5th Grade</p>
+                </div>
+            </div>
+             <p class="text-center text-gray-500 mt-8">Note: 2nd-5th Grade activities are coming soon!</p>
+        </div>
+
+        <!-- Kindergarten Page -->
+        <div id="kindergarten-page" class="page">
+            <header class="flex items-center justify-between mb-8">
+                <button onclick="showPage('home-page')" class="bg-gray-700 hover:bg-teal-600 font-bold py-2 px-4 rounded-lg inline-flex items-center transition-colors">
+                    <i data-lucide="home" class="mr-2 h-5 w-5"></i>
+                    Home
+                </button>
+                <h1 class="text-3xl font-bold text-teal-400">Kindergarten Activities</h1>
+                <div></div> <!-- Spacer -->
+            </header>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Activity Icons -->
+                <div onclick="openModal('modal-k-nr1')" class="activity-card bg-gray-700 rounded-lg p-5 shadow-lg hover:shadow-blue-500/50 hover:scale-105 transition-all duration-300 cursor-pointer">
+                    <p class="font-bold text-blue-400 text-sm">NUMERICAL REASONING</p>
+                    <h3 class="text-xl font-bold mb-1">Nature Count & Sort</h3>
+                    <p class="text-xs text-gray-400">K.NR.1.1, K.DPSR.1.1</p>
+                </div>
+                <div onclick="openModal('modal-k-pafr1')" class="activity-card bg-gray-700 rounded-lg p-5 shadow-lg hover:shadow-blue-500/50 hover:scale-105 transition-all duration-300 cursor-pointer">
+                    <p class="font-bold text-blue-400 text-sm">PATTERNING & ALGEBRA</p>
+                    <h3 class="text-xl font-bold mb-1">Clap, Stomp, Pattern!</h3>
+                    <p class="text-xs text-gray-400">K.PAFR.2.1</p>
+                </div>
+                 <div onclick="openModal('modal-k-mgsr1')" class="activity-card bg-gray-700 rounded-lg p-5 shadow-lg hover:shadow-blue-500/50 hover:scale-105 transition-all duration-300 cursor-pointer">
+                    <p class="font-bold text-blue-400 text-sm">MEASUREMENT & GEOMETRY</p>
+                    <h3 class="text-xl font-bold mb-1">Positional Simon Says</h3>
+                    <p class="text-xs text-gray-400">K.MGSR.2.2</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- First Grade Page -->
+        <div id="first-grade-page" class="page">
+            <header class="flex items-center justify-between mb-8">
+                <button onclick="showPage('home-page')" class="bg-gray-700 hover:bg-teal-600 font-bold py-2 px-4 rounded-lg inline-flex items-center transition-colors">
+                    <i data-lucide="home" class="mr-2 h-5 w-5"></i>
+                    Home
+                </button>
+                <h1 class="text-3xl font-bold text-teal-400">1st Grade Activities</h1>
+                <div></div> <!-- Spacer -->
+            </header>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Activity Icons -->
+                <div onclick="openModal('modal-1-pafr1')" class="activity-card bg-gray-700 rounded-lg p-5 shadow-lg hover:shadow-blue-500/50 hover:scale-105 transition-all duration-300 cursor-pointer">
+                    <p class="font-bold text-blue-400 text-sm">PATTERNING & ALGEBRA</p>
+                    <h3 class="text-xl font-bold mb-1">Human Growing Patterns</h3>
+                    <p class="text-xs text-gray-400">1.PAFR.2.1</p>
+                </div>
+                <div onclick="openModal('modal-1-mgsr1')" class="activity-card bg-gray-700 rounded-lg p-5 shadow-lg hover:shadow-blue-500/50 hover:scale-105 transition-all duration-300 cursor-pointer">
+                    <p class="font-bold text-blue-400 text-sm">MEASUREMENT & GEOMETRY</p>
+                    <h3 class="text-xl font-bold mb-1">Robot Coder</h3>
+                    <p class="text-xs text-gray-400">1.MGSR.1.1</p>
+                </div>
+                 <div class="activity-card bg-gray-700 rounded-lg p-5 shadow-lg opacity-50 cursor-not-allowed">
+                     <p class="font-bold text-blue-400 text-sm">COMING SOON</p>
+                     <h3 class="text-xl font-bold mb-1">More Activities</h3>
+                     <p class="text-xs text-gray-400">Check back later!</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Modals for Kindergarten Activities -->
+    <div id="modal-k-nr1" class="modal fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center p-4 opacity-0 pointer-events-none">
+        <div class="bg-gray-700 rounded-lg p-6 shadow-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto" id="pdf-content-k-nr1">
+            <div class="flex justify-between items-center mb-4 no-print">
+                <h3 class="text-2xl font-bold text-teal-400">Nature Count & Sort</h3>
+                <div>
+                    <button onclick="downloadPdf('pdf-content-k-nr1', 'Nature_Count_Sort.pdf')" class="text-gray-400 hover:text-white mr-2"><i data-lucide="download" class="h-6 w-6"></i></button>
+                    <button onclick="closeModal('modal-k-nr1')" class="text-gray-400 hover:text-white"><i data-lucide="x" class="h-6 w-6"></i></button>
+                </div>
+            </div>
+            <p class="mb-4 text-gray-300"><span class="font-semibold">Standard:</span> K.NR.1.1 (Represent numbers 0-20), K.DPSR.1.1 (Sort objects)</p>
+            <h4 class="text-lg font-semibold mb-2 flex items-center"><i data-lucide="book-open" class="h-5 w-5 mr-2 text-yellow-400"></i>Read-Aloud Connection:</h4>
+            <p class="mb-4 text-gray-300 italic">Read <span class="font-semibold">"We're Going on a Leaf Hunt" by Steve Metzger</span> to kick off a discussion about finding and collecting different kinds of things in nature.</p>
+            <h4 class="text-lg font-semibold mb-2">Materials Needed:</h4>
+            <ul class="list-disc list-inside mb-4 text-gray-300"><li>A bag or bucket for collecting</li><li>Items from nature (rocks, leaves, sticks, pinecones)</li><li>Paper and a marker, or chalk for outdoors</li></ul>
+            <h4 class="text-lg font-semibold mb-2 flex items-center no-print"><i data-lucide="sheet" class="h-5 w-5 mr-2 text-cyan-400"></i>Downloadable Resources:</h4>
+            <div class="mb-4 no-print">
+                <button onclick="downloadWorksheet_K_NR1()" class="bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded-lg inline-flex items-center transition-colors">
+                    <i data-lucide="download" class="mr-2 h-4 w-4"></i>
+                    Counting Worksheet
+                </button>
+            </div>
+            <h4 class="text-lg font-semibold mb-2">The Activity (Algorithm):</h4>
+            <ol class="list-decimal list-inside mb-4 text-gray-300 space-y-2">
+                <li><strong>Gather:</strong> Go outside for a "Nature Scavenger Hunt." Set a goal to find at least 10-15 interesting items. Talk about the different textures and shapes you find.</li>
+                <li><strong>Organize:</strong> Create a "sorting station" on the ground or a table. Ask, "How can we make groups that are the same?" Guide them to sort by type (all rocks together, all leaves together).</li>
+                <li><strong>Count & Compare:</strong> Touch each item in a group as you count it aloud: "One leaf, two leaves..." After counting each group, ask, "How many leaves did we find?"</li>
+                <li><strong>Label:</strong> On a piece of paper or with chalk, write the numeral next to each group. For an extra challenge, draw a picture of the item next to the number.</li>
+            </ol>
+            <h4 class="text-lg font-semibold mb-2 text-blue-400">Computational Thinking Spotlight:</h4>
+            <ul class="list-disc list-inside text-gray-300 space-y-1"><li><strong class="font-semibold">Decomposition:</strong> Breaking down a messy pile of nature items into smaller, organized groups (leaves, rocks, etc.).</li><li><strong class="font-semibold">Pattern Recognition:</strong> Identifying common attributes (e.g., "all of these are smooth," "all of these are pointy") to create the groups for sorting.</li><li><strong class="font-semibold">Abstraction:</strong> Understanding that the numeral '5' is a symbol that can represent five rocks, five leaves, or five of anything.</li><li><strong class="font-semibold">Algorithm:</strong> Following the clear, step-by-step process: 1. Collect -> 2. Sort by Type -> 3. Count Each Group -> 4. Write the Number.</li></ul>
+            <h4 class="text-lg font-semibold mt-4 mb-2">How to Scale It:</h4>
+            <ul class="list-disc list-inside text-gray-300"><li><span class="font-semibold">Easier:</span> Focus only on counting up to 5. Use only two types of items (e.g., just leaves and rocks).</li><li><span class="font-semibold">Harder:</span> Count up to 20. After sorting and counting, introduce comparison: "Which group has more? Which has less?"</li></ul>
+             <h4 class="text-lg font-semibold mt-4 mb-2">Suggested Activities and Variation:</h4>
+            <ul class="list-disc list-inside text-gray-300"><li><span class="font-semibold">Color Sort:</span> Instead of sorting by type, sort the found items by color.</li><li><span class="font-semibold">Size Sort:</span> Arrange items in a line from smallest to biggest.</li><li><span class="font-semibold">Texture Sort:</span> Create groups of "smooth" things and "bumpy" things.</li></ul>
+            <h4 class="text-lg font-semibold mt-4 mb-2 text-green-400">Future Connections (Higher Grades):</h4>
+            <ul class="list-disc list-inside text-gray-300 space-y-1"><li><strong>1st Grade (1.PAFR.1.3):</strong> Use the collections for addition and subtraction stories. "You have 8 rocks and 6 leaves. How many items do you have in all?"</li><li><strong>2nd Grade (2.NR.1.2):</strong> Collect a large number of items (like beans or pebbles) and practice bundling them into groups of ten to represent place value (e.g., 3 groups of ten and 4 ones is 34).</li></ul>
+        </div>
+    </div>
+    <div id="modal-k-pafr1" class="modal fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center p-4 opacity-0 pointer-events-none">
+        <div class="bg-gray-700 rounded-lg p-6 shadow-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto" id="pdf-content-k-pafr1">
+            <div class="flex justify-between items-center mb-4 no-print">
+                <h3 class="text-2xl font-bold text-teal-400">Clap, Stomp, Pattern!</h3>
+                <div>
+                    <button onclick="downloadPdf('pdf-content-k-pafr1', 'Clap_Stomp_Pattern.pdf')" class="text-gray-400 hover:text-white mr-2"><i data-lucide="download" class="h-6 w-6"></i></button>
+                    <button onclick="closeModal('modal-k-pafr1')" class="text-gray-400 hover:text-white"><i data-lucide="x" class="h-6 w-6"></i></button>
+                </div>
+            </div>
+            <p class="mb-4 text-gray-300"><span class="font-semibold">Standard:</span> K.PAFR.2.1 (Describe, extend, and create simple repeating patterns)</p>
+            <h4 class="text-lg font-semibold mb-2 flex items-center"><i data-lucide="book-open" class="h-5 w-5 mr-2 text-yellow-400"></i>Read-Aloud Connection:</h4>
+            <p class="mb-4 text-gray-300 italic">Read <span class="font-semibold">"Giraffes Can't Dance" by Giles Andreae</span> to talk about how everyone finds their own rhythm and beat, which is a great lead-in to creating body percussion patterns.</p>
+            <h4 class="text-lg font-semibold mb-2">Materials Needed:</h4>
+            <ul class="list-disc list-inside mb-4 text-gray-300"><li>Just your bodies and your voices!</li></ul>
+            <h4 class="text-lg font-semibold mb-2 flex items-center no-print"><i data-lucide="sheet" class="h-5 w-5 mr-2 text-cyan-400"></i>Downloadable Resources:</h4>
+            <div class="mb-4 no-print">
+                <button onclick="downloadWorksheet_K_PAFR1()" class="bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded-lg inline-flex items-center transition-colors">
+                    <i data-lucide="download" class="mr-2 h-4 w-4"></i>
+                    Pattern Worksheet
+                </button>
+            </div>
+            <h4 class="text-lg font-semibold mb-2">The Activity (Algorithm):</h4>
+            <ol class="list-decimal list-inside mb-4 text-gray-300 space-y-2">
+                <li><strong>Echo Me:</strong> Start as the "Pattern Leader." Say, "My pattern is Clap, Stomp. Listen carefully." Then perform the pattern clearly and slowly four times: Clap, Stomp, Clap, Stomp, Clap, Stomp, Clap, Stomp.</li>
+                <li><strong>Join the Beat:</strong> Say, "Now do it with me!" and lead the group in the pattern for 10-15 seconds until the rhythm feels steady and confident.</li>
+                <li><strong>What's Next?:</strong> Suddenly stop the pattern and hold your hands up in a "pause" gesture. Ask with excitement, "What comes next?" Wait for the students to perform or say the next action (a clap).</li>
+                <li><strong>Student Leader:</strong> Choose a student to be the new Pattern Leader. Whisper a pattern type to them (like AAB: "Stomp, Stomp, Clap") and let them lead the group in the same steps.</li>
+            </ol>
+            <h4 class="text-lg font-semibold mb-2 text-blue-400">Computational Thinking Spotlight:</h4>
+            <ul class="list-disc list-inside text-gray-300 space-y-1"><li><strong class="font-semibold">Decomposition:</strong> Breaking down a long sequence of actions into its smallest core unit (e.g., the "Clap, Stomp" block).</li><li><strong class="font-semibold">Pattern Recognition:</strong> Identifying the repeating sequence in the sounds and actions to predict what comes next.</li><li><strong class="font-semibold">Abstraction:</strong> Labeling the pattern as "AB, AB". This abstract label can then be used to describe other patterns, like "Red, Blue, Red, Blue".</li><li><strong class="font-semibold">Algorithm:</strong> The rule of the pattern is the algorithm: 1. Do action A (Clap). 2. Do action B (Stomp). 3. Repeat from Step 1.</li></ul>
+            <h4 class="text-lg font-semibold mt-4 mb-2">How to Scale It:</h4>
+            <ul class="list-disc list-inside text-gray-300"><li><span class="font-semibold">Easier:</span> Stick to simple AB patterns and use very distinct sounds (e.g., clap and pat knees).</li><li><span class="font-semibold">Harder:</span> Introduce more complex patterns like AAB, ABB, or ABC (e.g., Clap, Stomp, Snap).</li></ul>
+             <h4 class="text-lg font-semibold mt-4 mb-2">Suggested Activities and Variation:</h4>
+            <ul class="list-disc list-inside text-gray-300"><li><span class="font-semibold">Instrument Patterns:</span> Use shakers, drums, and tambourines to create sound patterns.</li><li><span class="font-semibold">Drawing Patterns:</span> Translate the sound patterns into visual patterns on paper using different colored crayons for each sound.</li><li><span class="font-semibold">Partner Patterns:</span> Have students work in pairs to create a secret pattern for the other to guess.</li></ul>
+            <h4 class="text-lg font-semibold mt-4 mb-2 text-green-400">Future Connections (Higher Grades):</h4>
+            <ul class="list-disc list-inside text-gray-300 space-y-1"><li><strong>1st Grade (1.PAFR.2.1):</strong> Transition from repeating patterns to simple *growing* patterns (e.g., Clap, Stomp... Clap, Clap, Stomp... Clap, Clap, Clap, Stomp...).</li><li><strong>2nd Grade (2.PAFR.2.2):</strong> Connect body patterns to number patterns. Create a pattern and then write the corresponding number sequence (e.g., an "add 2" pattern like 2, 4, 6, 8).</li></ul>
+        </div>
+    </div>
+     <div id="modal-k-mgsr1" class="modal fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center p-4 opacity-0 pointer-events-none">
+        <div class="bg-gray-700 rounded-lg p-6 shadow-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto" id="pdf-content-k-mgsr1">
+            <div class="flex justify-between items-center mb-4 no-print">
+                <h3 class="text-2xl font-bold text-teal-400">Positional Simon Says</h3>
+                    <div>
+                        <button onclick="downloadPdf('pdf-content-k-mgsr1', 'Positional_Simon_Says.pdf')" class="text-gray-400 hover:text-white mr-2"><i data-lucide="download" class="h-6 w-6"></i></button>
+                        <button onclick="closeModal('modal-k-mgsr1')" class="text-gray-400 hover:text-white"><i data-lucide="x" class="h-6 w-6"></i></button>
+                    </div>
+            </div>
+            <p class="mb-4 text-gray-300"><span class="font-semibold">Standard:</span> K.MGSR.2.2 (Describe relative positions of objects using terms like: below, above, beside, between, inside, outside, in front of, or behind.)</p>
+            <h4 class="text-lg font-semibold mb-2 flex items-center"><i data-lucide="book-open" class="h-5 w-5 mr-2 text-yellow-400"></i>Read-Aloud Connection:</h4>
+            <p class="mb-4 text-gray-300 italic">Read <span class="font-semibold">"Rosie's Walk" by Pat Hutchins.</span> As you read, have students use a small object (like an eraser) to act out Rosie's movements on their desk, moving it *across* the table, *around* a book, and *past* a pencil.</p>
+            <h4 class="text-lg font-semibold mb-2">Materials Needed:</h4>
+            <ul class="list-disc list-inside mb-4 text-gray-300"><li>Any common classroom object for each student (e.g., a beanbag, a block, an eraser).</li><li>A chair for each student.</li></ul>
+            <h4 class="text-lg font-semibold mb-2 flex items-center no-print"><i data-lucide="sheet" class="h-5 w-5 mr-2 text-cyan-400"></i>Downloadable Resources:</h4>
+            <div class="mb-4 no-print">
+                <button onclick="downloadWorksheet_K_MGSR1()" class="bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded-lg inline-flex items-center transition-colors">
+                    <i data-lucide="download" class="mr-2 h-4 w-4"></i>
+                    Positional Words Worksheet
+                </button>
+            </div>
+            <h4 class="text-lg font-semibold mb-2">The Activity (Algorithm):</h4>
+            <ol class="list-decimal list-inside mb-4 text-gray-300 space-y-2">
+                <li><strong>Choose the Object:</strong> Give each child one object, like a colorful block.</li>
+                <li><strong>Model the Words:</strong> Before starting, practice the key words. "Everyone, put your block *on top of* your chair. Now, put your block *under* your chair. Good!"</li>
+                <li><strong>Play the Game:</strong> Begin the game with clear, simple commands. "Simon says put the block *beside* your foot." Then, try a trick: "Put the block *in front of* your knees." See who remembers they can only move when Simon says!</li>
+                <li><strong>Student Caller:</strong> After a few rounds, pick a student to be the new "Simon." Encourage them to use the positional words you practiced together.</li>
+            </ol>
+            <h4 class="text-lg font-semibold mb-2 text-blue-400">Computational Thinking Spotlight:</h4>
+            <ul class="list-disc list-inside text-gray-300 space-y-1"><li><strong class="font-semibold">Decomposition:</strong> Breaking a verbal command ("Simon says put the block on your head") into two parts: the condition ("Simon says") and the action-location ("put block on head").</li><li><strong class="font-semibold">Pattern Recognition:</strong> Recognizing the rule-based pattern of the game (only move when the condition "Simon says" is met).</li><li><strong class="font-semibold">Abstraction:</strong> Understanding that "above" is a general concept of position that works for their head, their desk, or their chair.</li><li><strong class="font-semibold">Algorithm:</strong> Following the game's rules: 1. Listen to the command. 2. Check if it starts with "Simon says". 3. If yes, perform the action. If no, stay still.</li></ul>
+            <h4 class="text-lg font-semibold mt-4 mb-2">How to Scale It:</h4>
+            <ul class="list-disc list-inside text-gray-300"><li><span class="font-semibold">Easier:</span> Use only two opposite positions at a time, like "on" and "under," or "in front of" and "behind."</li><li><span class="font-semibold">Harder:</span> Introduce multi-step commands like, "Simon says put the block *under* your chair and *then* put your hands *on top of* your head."</li></ul>
+             <h4 class="text-lg font-semibold mt-4 mb-2">Suggested Activities and Variation:</h4>
+            <ul class="list-disc list-inside text-gray-300"><li><span class="font-semibold">Obstacle Course:</span> Set up a simple course and give positional commands ("Go *under* the table, then *around* the chair").</li><li><span class="font-semibold">Partner Posing:</span> In pairs, one student gives a command like "Put your hand *above* my hand."</li><li><span class="font-semibold">Drawing from Dictation:</span> Give positional instructions for a drawing ("Draw a sun *above* the house.").</li></ul>
+            <h4 class="text-lg font-semibold mt-4 mb-2 text-green-400">Future Connections (Higher Grades):</h4>
+            <ul class="list-disc list-inside text-gray-300 space-y-1"><li><strong>1st Grade (1.MGSR.2.1):</strong> Use positional language to compose and decompose shapes ("put the triangle *on top of* the square to make a house").</li><li><strong>5th Grade (5.MGSR.3.1):</strong> This foundational understanding of position is critical for describing points on a coordinate plane (e.g., the point is *above* the x-axis and *to the right of* the y-axis).</li></ul>
+        </div>
+    </div>
+
+    <!-- Modals for 1st Grade Activities -->
+    <div id="modal-1-pafr1" class="modal fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center p-4 opacity-0 pointer-events-none">
+        <div class="bg-gray-700 rounded-lg p-6 shadow-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto" id="pdf-content-1-pafr1">
+             <div class="flex justify-between items-center mb-4 no-print">
+                <h3 class="text-2xl font-bold text-teal-400">Human Growing Patterns</h3>
+                <div>
+                    <button onclick="downloadPdf('pdf-content-1-pafr1', 'Human_Growing_Patterns.pdf')" class="text-gray-400 hover:text-white mr-2"><i data-lucide="download" class="h-6 w-6"></i></button>
+                    <button onclick="closeModal('modal-1-pafr1')" class="text-gray-400 hover:text-white"><i data-lucide="x" class="h-6 w-6"></i></button>
+                </div>
+            </div>
+            <p class="mb-4 text-gray-300"><span class="font-semibold">Standard:</span> 1.PAFR.2.1 (Create, describe, and extend growing patterns.)</p>
+            <h4 class="text-lg font-semibold mb-2">Materials Needed:</h4>
+            <ul class="list-disc list-inside mb-4 text-gray-300"><li>A group of students!</li></ul>
+             <h4 class="text-lg font-semibold mb-2 flex items-center no-print"><i data-lucide="sheet" class="h-5 w-5 mr-2 text-cyan-400"></i>Downloadable Resources:</h4>
+            <div class="mb-4 no-print">
+                <button onclick="downloadWorksheet_1_PAFR1()" class="bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded-lg inline-flex items-center transition-colors">
+                    <i data-lucide="download" class="mr-2 h-4 w-4"></i>
+                    Growing Patterns Worksheet
+                </button>
+            </div>
+            <h4 class="text-lg font-semibold mb-2">The Activity (Algorithm):</h4>
+            <ol class="list-decimal list-inside mb-4 text-gray-300 space-y-2">
+                <li><strong>Start the Pattern:</strong> Have one student stand at the front of the room. Say, "This is the first step."</li>
+                <li><strong>Grow the Pattern:</strong> Ask two more students to come up and stand next to the first, making a line of three. Say, "This is the second step. How many students did we add?" (Two).</li>
+                <li><strong>Continue the Growth:</strong> Ask two more students to join the line, making a line of five. "This is the third step. How many did we add this time?" (Two).</li>
+                <li><strong>Predict What's Next:</strong> Ask the class, "What is the rule for our pattern?" (We add two students each time). "How many students should be in the next step?" (Seven). Have students test their prediction by calling up two more students.</li>
+            </ol>
+            <h4 class="text-lg font-semibold mb-2 text-blue-400">Computational Thinking Spotlight:</h4>
+            <ul class="list-disc list-inside text-gray-300 space-y-1">
+                <li><strong class="font-semibold">Decomposition:</strong> Breaking down the sequence (1, 3, 5...) into its two parts: a starting number (1) and the repeating rule (+2).</li>
+                <li><strong class="font-semibold">Pattern Recognition:</strong> Identifying that the pattern is not just repeating, but *growing* by a specific amount (+2) each time.</li>
+                <li><strong class="font-semibold">Abstraction:</strong> Understanding that the numbers (1, 3, 5...) are symbols that represent the growing line of students.</li>
+                <li><strong class="font-semibold">Algorithm:</strong> The rule "add 2" is the algorithm that generates the sequence.</li>
+            </ul>
+            <h4 class="text-lg font-semibold mt-4 mb-2">How to Scale It:</h4>
+            <ul class="list-disc list-inside text-gray-300">
+                <li><span class="font-semibold">Easier:</span> Use a simpler rule, like "+1". Use blocks or counters on a desk instead of students.</li>
+                <li><span class="font-semibold">Harder:</span> Introduce a "+3" rule or a decreasing pattern like "-2".</li>
+            </ul>
+             <h4 class="text-lg font-semibold mt-4 mb-2">Suggested Activities and Variation:</h4>
+            <ul class="list-disc list-inside text-gray-300">
+                <li><span class="font-semibold">Block Towers:</span> Build the growing patterns with Lego blocks to create growing towers.</li>
+                <li><span class="font-semibold">Art Patterns:</span> Draw the patterns using stickers or stamps.</li>
+                <li><span class="font-semibold">Sound Patterns:</span> Create growing patterns with sounds (1 clap, then 2 claps, then 3 claps).</li>
+            </ul>
+            <h4 class="text-lg font-semibold mt-4 mb-2 text-green-400">Future Connections (Higher Grades):</h4>
+            <ul class="list-disc list-inside text-gray-300 space-y-1">
+                <li><strong>2nd Grade (2.PAFR.2.2):</strong> Connect growing patterns to odd and even numbers. The "+2" pattern starting at 1 creates all the odd numbers.</li>
+                <li><strong>3rd Grade (3.PAFR.1.1):</strong> This provides a foundation for multiplication as repeated addition. A pattern that grows by 3 is the 3x table.</li>
+            </ul>
+        </div>
+    </div>
+    <div id="modal-1-mgsr1" class="modal fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center p-4 opacity-0 pointer-events-none">
+        <div class="bg-gray-700 rounded-lg p-6 shadow-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto" id="pdf-content-1-mgsr1">
+             <div class="flex justify-between items-center mb-4 no-print">
+                <h3 class="text-2xl font-bold text-teal-400">Robot Coder</h3>
+                <div>
+                    <button onclick="downloadPdf('pdf-content-1-mgsr1', 'Robot_Coder.pdf')" class="text-gray-400 hover:text-white mr-2"><i data-lucide="download" class="h-6 w-6"></i></button>
+                    <button onclick="closeModal('modal-1-mgsr1')" class="text-gray-400 hover:text-white"><i data-lucide="x" class="h-6 w-6"></i></button>
+                </div>
+            </div>
+            <p class="mb-4 text-gray-300"><span class="font-semibold">Standard:</span> 1.MGSR.1.1 (Describe the relative location of objects using positional words.)</p>
+            <h4 class="text-lg font-semibold mb-2">Materials Needed:</h4>
+            <ul class="list-disc list-inside mb-4 text-gray-300">
+                <li>A designated "Robot" (one student) and "Coders" (the rest of the class).</li>
+                <li>Index cards with arrows (Forward, Turn Left, Turn Right).</li>
+                <li>An object to be the "treasure" (e.g., a special book or toy).</li>
+            </ul>
+             <h4 class="text-lg font-semibold mb-2 flex items-center no-print"><i data-lucide="sheet" class="h-5 w-5 mr-2 text-cyan-400"></i>Downloadable Resources:</h4>
+            <div class="mb-4 no-print">
+                <button onclick="downloadWorksheet_1_MGSR1()" class="bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded-lg inline-flex items-center transition-colors">
+                    <i data-lucide="download" class="mr-2 h-4 w-4"></i>
+                    Robot Maze Challenge
+                </button>
+            </div>
+            <h4 class="text-lg font-semibold mb-2">The Activity (Algorithm):</h4>
+            <ol class="list-decimal list-inside mb-4 text-gray-300 space-y-2">
+                <li><strong>Set the Goal:</strong> Place the "treasure" somewhere in the classroom. Have the "Robot" stand at a starting point.</li>
+                <li><strong>Decompose the Task:</strong> As a class, discuss the path the robot needs to take. Break it down into single steps (e.g., "go forward two steps," "turn right," "go forward three steps").</li>
+                <li><strong>Write the Code:</strong> The "Coders" select the arrow cards and place them in a sequence on the floor to represent the plan.</li>
+                <li><strong>Run the Program:</strong> The "Robot" carefully follows the sequence of arrow cards, one by one. The class should say the command aloud as the robot performs it.</li>
+                <li><strong>Debug if Needed:</strong> Did the robot reach the treasure? If not, review the "code" (the cards) as a class to find the mistake and fix it.</li>
+            </ol>
+            <h4 class="text-lg font-semibold mb-2 text-blue-400">Computational Thinking Spotlight:</h4>
+            <ul class="list-disc list-inside text-gray-300 space-y-1">
+                <li><strong class="font-semibold">Decomposition:</strong> Breaking down the complex goal ("get the treasure") into small, manageable steps (go forward, turn).</li>
+                <li><strong class="font-semibold">Pattern Recognition:</strong> Students might recognize patterns in their code, such as "Forward, Forward, Forward" being a repeated action.</li>
+                <li><strong class="font-semibold">Abstraction:</strong> Using symbols (arrows) on the cards to represent a complex action (the robot taking a step or turning their whole body).</li>
+                <li><strong class="font-semibold">Algorithm:</strong> The sequence of cards created by the students is a simple, clear algorithm designed to solve the problem.</li>
+            </ul>
+            <h4 class="text-lg font-semibold mt-4 mb-2">How to Scale It:</h4>
+            <ul class="list-disc list-inside text-gray-300">
+                <li><span class="font-semibold">Easier:</span> Use a very short, direct path with no turns. Use chalk on the playground to draw a path for the robot to follow.</li>
+                <li><span class="font-semibold">Harder:</span> Create a more complex path with multiple turns and obstacles that the robot must navigate around.</li>
+            </ul>
+             <h4 class="text-lg font-semibold mt-4 mb-2">Suggested Activities and Variation:</h4>
+            <ul class="list-disc list-inside text-gray-300">
+                <li><span class="font-semibold">Map It Out:</span> Before coding, have students draw a map of the classroom and the robot's path on paper.</li>
+                <li><span class="font-semibold">Partner Coding:</span> In pairs, one student writes a code on a whiteboard, and the other student acts as the robot.</li>
+                <li><span class="font-semibold">Secret Destination:</span> The teacher writes a code and the students have to predict where the robot will end up.</li>
+            </ul>
+            <h4 class="text-lg font-semibold mt-4 mb-2 text-green-400">Future Connections (Higher Grades):</h4>
+            <ul class="list-disc list-inside text-gray-300 space-y-1">
+                <li><strong>2nd Grade (2.MGSR.1.1):</strong> This provides a foundation for understanding grids and arrays.</li>
+                <li><strong>4th Grade (4.MGSR.3.2):</strong> This early practice with algorithms and sequencing is a direct precursor to block-based coding (like Scratch) and understanding coordinate planes.</li>
+            </ul>
+        </div>
+    </div>
+    
+
+    <script>
+        // Set up jsPDF
+        window.jsPDF = window.jspdf.jsPDF;
+
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        const pages = document.querySelectorAll('.page');
+        const modals = document.querySelectorAll('.modal');
+
+        function showPage(pageId) {
+            pages.forEach(page => {
+                if (page.id === pageId) {
+                    page.classList.add('active');
+                } else {
+                    page.classList.remove('active');
+                }
+            });
+            window.scrollTo(0, 0);
+        }
+
+        function openModal(modalId) {
+            const modal = document.getElementById(modalId);
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+        }
+
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            modal.classList.add('opacity-0', 'pointer-events-none');
+        }
+        
+        // Close modal on escape key press
+        window.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape') {
+                modals.forEach(modal => {
+                    if (!modal.classList.contains('pointer-events-none')) {
+                        closeModal(modal.id);
+                    }
+                });
+            }
+        });
+        
+        // --- START: PDF Shape Drawing Helpers ---
+        function drawCircle(pdf, x, y, radius) {
+            pdf.circle(x, y, radius, 'S'); // 'S' for stroke
+        }
+
+        function drawSquare(pdf, x, y, size) {
+             pdf.rect(x - size/2, y - size/2, size, size, 'S');
+        }
+
+        function drawTriangle(pdf, x, y, size) {
+            const height = size * Math.sqrt(3) / 2;
+            const points = [
+                [0, -height / 2], // Top point
+                [-size / 2, height / 2], // Bottom left
+                [size / 2, height / 2]  // Bottom right
+            ];
+            pdf.lines(points, x, y, [1, 1], 'S', true); // true to close path
+        }
+
+        function drawStar(pdf, x, y, size) {
+            const outerRadius = size / 2;
+            const innerRadius = size / 4;
+            let points = [];
+            for (let i = 0; i < 10; i++) {
+                let radius = i % 2 === 0 ? outerRadius : innerRadius;
+                let angle = (Math.PI / 5 * i) - (Math.PI / 2); // Start pointing up
+                points.push([radius * Math.cos(angle), radius * Math.sin(angle)]);
+            }
+            pdf.lines(points, x, y, [1, 1], 'S', true);
+        }
+        // --- END: PDF Shape Drawing Helpers ---
+
+        // Function to create and download the "Robot Maze Challenge" worksheet
+        function downloadWorksheet_1_MGSR1() {
+            const { jsPDF } = window.jspdf;
+            const pdf = new jsPDF('p', 'mm', 'a4');
+            const margin = 20;
+            const docWidth = pdf.internal.pageSize.getWidth();
+            let yPos = margin + 25;
+
+            // --- Header ---
+            pdf.setFont('helvetica', 'bold');
+            pdf.setFontSize(22);
+            pdf.text('Robot Maze Challenge!', docWidth / 2, margin, { align: 'center' });
+            pdf.setFont('helvetica', 'normal');
+            pdf.setFontSize(12);
+            pdf.text('Name: _________________________', margin, margin + 15);
+            pdf.text('Write the arrow code to get the robot to the trophy!', margin, yPos);
+            yPos += 15;
+
+            // --- Draw Grid ---
+            const gridStartX = margin;
+            const gridStartY = yPos;
+            const gridSize = 100;
+            const cells = 5;
+            const cellSize = gridSize / cells;
+            pdf.setLineWidth(0.2);
+            for (let i = 0; i <= cells; i++) {
+                // Horizontal lines
+                pdf.line(gridStartX, gridStartY + (i * cellSize), gridStartX + gridSize, gridStartY + (i * cellSize));
+                // Vertical lines
+                pdf.line(gridStartX + (i * cellSize), gridStartY, gridStartX + (i * cellSize), gridStartY + gridSize);
+            }
+
+            // --- Draw Robot (simple circle with eyes) ---
+            const robotX = gridStartX + cellSize / 2;
+            const robotY = gridStartY + cellSize / 2;
+            pdf.circle(robotX, robotY, 5, 'S');
+            pdf.circle(robotX - 2, robotY - 1, 0.5, 'F');
+            pdf.circle(robotX + 2, robotY - 1, 0.5, 'F');
+            pdf.text('Start', robotX - 5, robotY + 10);
+            
+            // --- Draw Trophy (simple cup shape) ---
+            const trophyX = gridStartX + gridSize - cellSize / 2;
+            const trophyY = gridStartY + gridSize - cellSize / 2;
+            pdf.rect(trophyX - 4, trophyY - 6, 8, 3); // Base
+            pdf.rect(trophyX - 2, trophyY - 3, 4, 8); // Stem
+            pdf.lines([[-5, 5], [-5, -2], [5, -2], [5, 5]], trophyX, trophyY - 5, [1, 1], 'S'); // Cup
+            pdf.text('End', trophyX - 3, trophyY + 10);
+
+            // --- Draw Maze Walls ---
+            pdf.setLineWidth(1.5);
+            pdf.line(gridStartX + cellSize, gridStartY, gridStartX + cellSize, gridStartY + cellSize * 2);
+            pdf.line(gridStartX + cellSize * 2, gridStartY + cellSize, gridStartX + cellSize * 2, gridStartY + cellSize * 3);
+            pdf.line(gridStartX + cellSize * 3, gridStartY + cellSize * 2, gridStartX + cellSize * 3, gridStartY + cellSize * 4);
+            pdf.line(gridStartX + cellSize * 4, gridStartY + cellSize * 3, gridStartX + cellSize * 4, gridStartY + cellSize * 5);
+             pdf.line(gridStartX, gridStartY + cellSize * 3, gridStartX + cellSize, gridStartY + cellSize * 3);
+
+
+            // --- Code Area ---
+            const codeX = gridStartX + gridSize + 15;
+            pdf.setFont('helvetica', 'bold');
+            pdf.setFontSize(16);
+            pdf.text('My Code:', codeX, gridStartY);
+            pdf.setLineWidth(0.5);
+            pdf.rect(codeX, gridStartY + 5, docWidth - margin - codeX, 80);
+            
+
+            pdf.save('Robot_Maze_Worksheet.pdf');
+        }
+
+
+        // Function to create and download the "Pattern Power!" worksheet
+        function downloadWorksheet_K_PAFR1() {
+            const { jsPDF } = window.jspdf;
+            const pdf = new jsPDF('p', 'mm', 'a4');
+            const margin = 20;
+            const docWidth = pdf.internal.pageSize.getWidth();
+
+            // --- Header ---
+            pdf.setFont('helvetica', 'bold');
+            pdf.setFontSize(24);
+            pdf.text('Pattern Power!', docWidth / 2, margin, { align: 'center' });
+            
+            pdf.setFont('helvetica', 'normal');
+            pdf.setFontSize(12);
+            pdf.text('Name: _________________________', margin, margin + 15);
+            
+            let yPos = margin + 30;
+            const shapeSize = 8;
+            const spacing = 15;
+
+            // --- Section 1: Complete the Pattern ---
+            pdf.setFont('helvetica', 'bold');
+            pdf.setFontSize(16);
+            pdf.text('1. Complete the pattern.', margin, yPos);
+            yPos += 15;
+            
+            // Pattern 1: Circle, Square, Circle, Square... (AB) - Longer
+            drawCircle(pdf, margin + shapeSize/2, yPos, shapeSize/2);
+            drawSquare(pdf, margin + spacing + shapeSize/2, yPos, shapeSize);
+            drawCircle(pdf, margin + spacing*2 + shapeSize/2, yPos, shapeSize/2);
+            drawSquare(pdf, margin + spacing*3 + shapeSize/2, yPos, shapeSize);
+            drawCircle(pdf, margin + spacing*4 + shapeSize/2, yPos, shapeSize/2);
+            drawSquare(pdf, margin + spacing*5 + shapeSize/2, yPos, shapeSize);
+            
+            // Blank lines for drawing
+            pdf.setLineWidth(0.5);
+            pdf.line(margin + spacing*6 + 5, yPos + 5, margin + spacing*7, yPos + 5);
+            pdf.line(margin + spacing*7 + 5, yPos + 5, margin + spacing*8, yPos + 5);
+            yPos += 25;
+
+            // Pattern 2: Triangle, Circle, Square... (ABC) - Longer
+            drawTriangle(pdf, margin + shapeSize/2, yPos, shapeSize);
+            drawCircle(pdf, margin + spacing + shapeSize/2, yPos, shapeSize/2);
+            drawSquare(pdf, margin + spacing*2 + shapeSize/2, yPos, shapeSize);
+            drawTriangle(pdf, margin + spacing*3 + shapeSize/2, yPos, shapeSize);
+            drawCircle(pdf, margin + spacing*4 + shapeSize/2, yPos, shapeSize/2);
+            drawSquare(pdf, margin + spacing*5 + shapeSize/2, yPos, shapeSize);
+
+            // Blank lines for drawing
+            pdf.setLineWidth(0.5);
+            pdf.line(margin + spacing*6 + 5, yPos + 5, margin + spacing*7, yPos + 5);
+            pdf.line(margin + spacing*7 + 5, yPos + 5, margin + spacing*8, yPos + 5);
+            yPos += 30;
+
+            // --- Section 2: Draw the missing shapes ---
+            pdf.setFont('helvetica', 'bold');
+            pdf.setFontSize(16);
+            pdf.text('2. Draw the missing shapes.', margin, yPos);
+            yPos += 15;
+            
+            // Pattern 3: Square, Circle, Circle... (ABB)
+            drawSquare(pdf, margin + shapeSize/2, yPos, shapeSize);
+            // Blank Line
+            pdf.line(margin + spacing + 5, yPos + 5, margin + spacing*2, yPos + 5);
+            drawCircle(pdf, margin + spacing*2 + shapeSize/2, yPos, shapeSize/2);
+            drawSquare(pdf, margin + spacing*3 + shapeSize/2, yPos, shapeSize);
+            drawCircle(pdf, margin + spacing*4 + shapeSize/2, yPos, shapeSize/2);
+            // Blank Line
+            pdf.line(margin + spacing*5 + 5, yPos + 5, margin + spacing*6, yPos + 5);
+            yPos += 25;
+            
+            // --- Section 3: Create Your Own Pattern ---
+            pdf.setFont('helvetica', 'bold');
+            pdf.setFontSize(16);
+            pdf.text('3. Create your own amazing pattern!', margin, yPos);
+            yPos += 10;
+            pdf.setLineDash([2, 2], 0);
+            pdf.rect(margin, yPos, docWidth - (margin * 2), 40);
+            pdf.setLineDash([], 0);
+            yPos += 55;
+
+            // --- Section 4: Color the Pattern ---
+            pdf.setFont('helvetica', 'bold');
+            pdf.setFontSize(16);
+            pdf.text('4. Color the pattern: Red, Blue, Red, Blue...', margin, yPos);
+            yPos += 15;
+            
+            drawCircle(pdf, margin + shapeSize/2, yPos, shapeSize/2);
+            drawCircle(pdf, margin + spacing + shapeSize/2, yPos, shapeSize/2);
+            drawCircle(pdf, margin + spacing*2 + shapeSize/2, yPos, shapeSize/2);
+            drawCircle(pdf, margin + spacing*3 + shapeSize/2, yPos, shapeSize/2);
+            drawCircle(pdf, margin + spacing*4 + shapeSize/2, yPos, shapeSize/2);
+            drawCircle(pdf, margin + spacing*5 + shapeSize/2, yPos, shapeSize/2);
+
+
+            pdf.save('Pattern_Power_Worksheet.pdf');
+        }
+
+        // Function to create and download the "Growing Patterns" worksheet for 1st Grade
+        function downloadWorksheet_1_PAFR1() {
+            const { jsPDF } = window.jspdf;
+            const pdf = new jsPDF('p', 'mm', 'a4');
+            const margin = 20;
+            const docWidth = pdf.internal.pageSize.getWidth();
+            let yPos = margin + 30;
+
+            // --- Header ---
+            pdf.setFont('helvetica', 'bold');
+            pdf.setFontSize(22);
+            pdf.text('Growing Patterns!', docWidth / 2, margin, { align: 'center' });
+            pdf.setFont('helvetica', 'normal');
+            pdf.setFontSize(12);
+            pdf.text('Name: _________________________', margin, margin + 15);
+
+            // --- Section 1: Extend the Number Pattern ---
+            pdf.setFont('helvetica', 'bold');
+            pdf.setFontSize(16);
+            pdf.text('1. Extend the number pattern.', margin, yPos);
+            yPos += 15;
+
+            pdf.setFont('helvetica', 'normal');
+            pdf.setFontSize(18);
+            pdf.text('1, 3, 5, ___, ___, ___', margin, yPos);
+            yPos += 20;
+            pdf.text('2, 4, 6, ___, ___, ___', margin, yPos);
+            yPos += 30;
+
+            // --- Section 2: Draw the Next Step ---
+            pdf.setFont('helvetica', 'bold');
+            pdf.setFontSize(16);
+            pdf.text('2. Draw the next step in the pattern.', margin, yPos);
+            yPos += 15;
+
+            // Draw a growing pattern: 1 square, then 2 squares, then 3...
+            let xPos = margin;
+            drawSquare(pdf, xPos + 5, yPos, 10); // Step 1
+            xPos += 30;
+            drawSquare(pdf, xPos + 5, yPos, 10); // Step 2
+            drawSquare(pdf, xPos + 18, yPos, 10);
+            xPos += 45;
+            drawSquare(pdf, xPos + 5, yPos, 10); // Step 3
+            drawSquare(pdf, xPos + 18, yPos, 10);
+            drawSquare(pdf, xPos + 31, yPos, 10);
+            
+            // Box for the next step
+            pdf.setLineDash([2, 2], 0);
+            pdf.rect(xPos + 50, yPos - 10, 50, 25);
+            pdf.setLineDash([], 0);
+            yPos += 35;
+
+
+             // --- Section 3: What's the Rule? ---
+            pdf.setFont('helvetica', 'bold');
+            pdf.setFontSize(16);
+            pdf.text("3. What's the rule?", margin, yPos);
+            yPos += 15;
+            
+            pdf.setFont('helvetica', 'normal');
+            pdf.setFontSize(18);
+            pdf.text('5, 10, 15, 20', margin, yPos);
+            
+            pdf.setFontSize(12);
+            pdf.text('The rule is: ______________', margin + 60, yPos);
+            yPos += 20;
+
+            pdf.setFontSize(18);
+            pdf.text('10, 8, 6, 4', margin, yPos);
+            pdf.setFontSize(12);
+            pdf.text('The rule is: ______________', margin + 60, yPos);
+
+
+            pdf.save('Growing_Patterns_Worksheet.pdf');
+        }
+
+
+        // Function to create and download the Positional Words worksheet
+        function downloadWorksheet_K_MGSR1() {
+            const { jsPDF } = window.jspdf;
+            const pdf = new jsPDF('p', 'mm', 'a4');
+            const margin = 20;
+            const docWidth = pdf.internal.pageSize.getWidth();
+
+            // --- Header ---
+            pdf.setFont('helvetica', 'bold');
+            pdf.setFontSize(22);
+            pdf.text('Where Does It Go?', docWidth / 2, margin, { align: 'center' });
+            
+            pdf.setFont('helvetica', 'normal');
+            pdf.setFontSize(12);
+            pdf.text('Name: _________________________', margin, margin + 15);
+
+            // --- Main Scene Drawing Area ---
+            const sceneY = margin + 30;
+            const sceneHeight = 120;
+            pdf.setLineWidth(0.2);
+            pdf.setLineDash([2, 2], 0);
+            pdf.rect(margin, sceneY, docWidth - (margin * 2), sceneHeight);
+            pdf.setLineDash([], 0);
+
+            // --- Draw a simple table in the scene ---
+            pdf.setLineWidth(0.5);
+            const tableX = docWidth / 2 - 30;
+            const tableY = sceneY + sceneHeight - 40;
+            pdf.rect(tableX, tableY, 60, 5); // Tabletop
+            pdf.line(tableX + 5, tableY + 5, tableX + 5, tableY + 30); // Left leg
+            pdf.line(tableX + 55, tableY + 5, tableX + 55, tableY + 30); // Right leg
+            pdf.setFontSize(10);
+            pdf.setTextColor(150);
+            pdf.text('This is the drawing area.', docWidth / 2, sceneY + 10, {align: 'center'});
+            pdf.setTextColor(0);
+
+            // --- Instructions ---
+            const instructionsY = sceneY + sceneHeight + 15;
+            pdf.setFont('helvetica', 'bold');
+            pdf.setFontSize(16);
+            pdf.text('Follow the Instructions:', margin, instructionsY);
+
+            pdf.setFont('helvetica', 'normal');
+            pdf.setFontSize(12);
+            const instructions = [
+                "1. Draw a yellow sun ABOVE the table.",
+                "2. Draw a red ball UNDER the table.",
+                "3. Draw a green plant BESIDE the table."
+            ];
+            
+            for (let i = 0; i < instructions.length; i++) {
+                pdf.text(instructions[i], margin, instructionsY + 10 + (i * 10));
+            }
+            
+            pdf.save('Positional_Words_Worksheet.pdf');
+        }
+
+
+        // Function to create and download the Nature Count & Sort worksheet
+        function downloadWorksheet_K_NR1() {
+           const { jsPDF } = window.jspdf;
+            const pdf = new jsPDF('p', 'mm', 'a4');
+            const margin = 20;
+            const docWidth = pdf.internal.pageSize.getWidth();
+            const docHeight = pdf.internal.pageSize.getHeight();
+
+            // --- Header ---
+            pdf.setFont('helvetica', 'bold');
+            pdf.setFontSize(22);
+            pdf.text('Nature Count & Sort', docWidth / 2, margin, { align: 'center' });
+            
+            pdf.setFont('helvetica', 'normal');
+            pdf.setFontSize(12);
+            pdf.text('Name: _________________________', margin, margin + 15);
+
+            // --- Instructions ---
+            pdf.setFontSize(14);
+            pdf.text('Draw what you found. Count how many. Write the number.', margin, margin + 30);
+
+            // --- Create Worksheet Rows ---
+            let yPosition = margin + 45;
+            const rowHeight = 65;
+            const boxWidth = 80;
+            const boxHeight = 50;
+
+            for (let i = 0; i < 3; i++) {
+                // Drawing Box
+                pdf.setLineWidth(0.5);
+                pdf.rect(margin, yPosition, boxWidth, boxHeight); // x, y, width, height
+                pdf.setFontSize(10);
+                pdf.setTextColor(150);
+                pdf.text('Draw what you found here.', margin + 5, yPosition + 7);
+                pdf.setTextColor(0);
+
+                // Counting Section
+                const countX = margin + boxWidth + 15;
+                pdf.setFontSize(14);
+                pdf.text('How many?', countX, yPosition + 10);
+                
+                // Number Box
+                pdf.rect(countX, yPosition + 15, 25, 25);
+                
+                // Ten Frame for one-to-one counting
+                const tenFrameX = countX + 35;
+                const tenFrameY = yPosition + 5;
+                const circleRadius = 3;
+                for (let row = 0; row < 2; row++) {
+                    for (let col = 0; col < 5; col++) {
+                        pdf.circle(tenFrameX + (col * (circleRadius * 2 + 2)), tenFrameY + (row * (circleRadius * 2 + 2)), circleRadius, 'S');
+                    }
+                }
+
+
+                yPosition += rowHeight;
+                if (yPosition > docHeight - rowHeight) {
+                    // This is a safeguard, but for 3 rows it's not needed.
+                    break; 
+                }
+            }
+
+            pdf.save('Nature_Count_Worksheet.pdf');
+        }
+
+        // Function to download modal content as PDF
+        function downloadPdf(contentId, filename) {
+            const { jsPDF } = window.jspdf;
+            const content = document.getElementById(contentId);
+            
+            // --- START: Store original styles and temporarily modify for full capture ---
+            const originalStyles = {
+                bgColor: content.style.backgroundColor,
+                maxHeight: content.style.maxHeight,
+                overflowY: content.style.overflowY,
+            };
+            const originalTextColors = new Map();
+            const textElements = content.querySelectorAll('*');
+            
+            // Apply print-friendly styles
+            content.style.backgroundColor = 'white';
+            content.style.maxHeight = 'none'; // Allow content to expand to its full height
+            content.style.overflowY = 'visible'; // Ensure nothing is hidden by overflow
+            textElements.forEach(el => {
+                originalTextColors.set(el, el.style.color);
+                el.style.color = 'black';
+            });
+            // --- END: Style modifications ---
+
+            html2canvas(content, { 
+                scale: 2, 
+                backgroundColor: '#ffffff',
+                useCORS: true,
+                // Make sure html2canvas captures the full height, not just the window height
+                windowHeight: content.scrollHeight,
+                ignoreElements: (element) => element.classList.contains('no-print') 
+            }).then(sourceCanvas => {
+                const pdf = new jsPDF('p', 'mm', 'a4');
+                const pdfWidth = pdf.internal.pageSize.getWidth();
+                const pdfHeight = pdf.internal.pageSize.getHeight();
+                
+                const margin = 10;
+                const usableWidth = pdfWidth - (margin * 2);
+                const usableHeight = pdfHeight - (margin * 2);
+
+                const imgWidthMM = usableWidth;
+                const imgHeightMM = sourceCanvas.height * usableWidth / sourceCanvas.width;
+
+                if (imgHeightMM <= usableHeight) {
+                    const imgData = sourceCanvas.toDataURL('image/png');
+                    pdf.addImage(imgData, 'PNG', margin, margin, imgWidthMM, imgHeightMM);
+                } else {
+                    let capturedHeight = 0;
+                    const pageHeightInPixels = (usableHeight / usableWidth) * sourceCanvas.width;
+
+                    while (capturedHeight < sourceCanvas.height) {
+                         if (capturedHeight > 0) {
+                            pdf.addPage();
+                        }
+                        
+                        const sliceCanvas = document.createElement('canvas');
+                        const sliceCtx = sliceCanvas.getContext('2d');
+                        
+                        sliceCanvas.width = sourceCanvas.width;
+                        sliceCanvas.height = Math.min(pageHeightInPixels, sourceCanvas.height - capturedHeight);
+
+                        sliceCtx.drawImage(
+                            sourceCanvas,
+                            0, capturedHeight, sourceCanvas.width, sliceCanvas.height,
+                            0, 0, sliceCanvas.width, sliceCanvas.height
+                        );
+                        
+                        const imgData = sliceCanvas.toDataURL('image/png');
+                        const sliceHeightMM = sliceCanvas.height * usableWidth / sliceCanvas.width;
+                        
+                        pdf.addImage(imgData, 'PNG', margin, margin, imgWidthMM, sliceHeightMM);
+                        
+                        capturedHeight += sliceCanvas.height;
+                    }
+                }
+
+                pdf.save(filename);
+
+            }).finally(() => {
+                // --- START: Restore original styles ---
+                content.style.backgroundColor = originalStyles.bgColor;
+                content.style.maxHeight = originalStyles.maxHeight;
+                content.style.overflowY = originalStyles.overflowY;
+                textElements.forEach(el => {
+                    el.style.color = originalTextColors.get(el);
+                });
+                // --- END: Style restoration ---
+            });
+        }
+
+    </script>
+</body>
+</html>
+
